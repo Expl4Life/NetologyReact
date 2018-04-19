@@ -7,4 +7,4 @@ const item = {
   currency: '£'
 };
 
-ReactDOM.render(<ShopItem item={item} />, document.getElementById('root'));
+ReactDOM.render(<ShopItem item={item}/>, document.getElementById('root'));
