@@ -1,4 +1,4 @@
-const now = new Date(2018, 1, 10);
+const now = new Date();
 
 ReactDOM.render(
   <Calendar date={now} />,
