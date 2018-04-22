@@ -37,7 +37,7 @@ const editTitle = (title) => {
   let outputTitle;
 
   if (title.length > 50) {
-    outputTitle = `${title.slice(0, 50)}...`;
+    outputTitle = `${title.slice(50)}...`;
     return outputTitle;
   }
 
