@@ -19,7 +19,7 @@ const Portfolio = (props) => {
     <div className="portfolio">
       <ReactCSSTransitionGroup
         transitionName="portfolio"
-        transitionEnterTimeout={500}
+        transitionEnterTimeout={700}
         transitionLeaveTimeout={300} >
         {renderProjects(projects)}
       </ReactCSSTransitionGroup>
