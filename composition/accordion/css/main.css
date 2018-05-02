@@ -51,7 +51,6 @@ h2, h3 {
   border: 0;
   background: none;
   text-indent: -9999%;
-  pointer-events: none;
 }
 .section button:before {
   content: '';
