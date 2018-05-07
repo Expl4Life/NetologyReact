@@ -6,7 +6,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       fonts: [],
-      selectedFont: null,
+      selectedFont: {name: "abc1", path: "./images/abc1/images"},
       text: ""
     }
   }
