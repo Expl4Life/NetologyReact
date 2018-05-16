@@ -15,7 +15,7 @@ class App extends React.Component {
           first_name: 'Pavel',
           last_name: 'Durov',
           img: 'https://pp.userapi.com/c836333/v836333001/31189/8To0r3d-6iQ.jpg',
-          url: 'https://vk.com/id1',
+          url: 'https://vk.com/anonimizer_me2',
         },
         {
           first_name: 'Super',
@@ -37,7 +37,7 @@ class App extends React.Component {
           first_name: 'Oleg',
           last_name: 'Konev',
           url: 'https://vk.com/id62',
-          birthday: '1974-02-11'
+          birthday: '2018-05-14'
         }
       ]
     };

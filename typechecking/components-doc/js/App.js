@@ -19,8 +19,6 @@ class App extends React.Component {
 
   onSubmit(e) {
     e.preventDefault();
-
-    console.log(this.state);
     alert('Профиль зарегистрирован');
   }
 
@@ -28,7 +26,6 @@ class App extends React.Component {
     const target = e.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
     const name = target.name;
-
     this.setState({
       [name]: value
     })
