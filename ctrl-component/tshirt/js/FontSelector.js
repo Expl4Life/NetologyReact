@@ -6,7 +6,7 @@ class FontSelector extends React.Component {
   }
 
   componentDidMount() {
-    this.setFont(this.props.selectedFont)
+    this.setFont(this.props.selected)
   }
 
   selectHandler(e) {
@@ -24,14 +24,19 @@ class FontSelector extends React.Component {
   render() {
     return (
       <div className="font-picker">
-
         {this.props.fonts.map((font, index) => {
+          let checkedStatus = false;
+
+          if(this.props.selected) {
+            checkedStatus = (font.name === this.props.selected.name ? true : false);
+          }
           return (
             <div className="grid center font-item">
               <Input
                 type="radio"
                 name="font"
                 index={index}
+                defaultChecked={checkedStatus}
                 value={font.name}
                 id={font.name}
                 onChange={this.selectHandler}
