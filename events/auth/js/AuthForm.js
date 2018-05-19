@@ -1,51 +1,35 @@
 'use strict';
 
+const checkFieldValue = (regexp = '') => {
+
+  return function (event) {
+    event.currentTarget.value = event.currentTarget.value.replace(regexp, '');
+  }
+};
+
+const regExpData = {
+  email: /[^\w@\.-]+/gi,
+  password: /[^\w]+/gi
+};
+
 const AuthForm = ({onAuth}) => {
 
-  let nameInput, emailInput, passwordInput;
-
-  const validateSymbol = {
-
-    email(letter) {
-      let re = /[a-zA-Z0-9@._-]/;
-      return re.test(String(letter));
-    },
-
-    password(letter) {
-      let re = /[a-zA-Z0-9@._]/;
-      return re.test(String(letter));
-    }
-  };
-
-  const inputHandler = event => {
-    let statusSymbol = true;
-
-    const field = event.currentTarget;
-    const fieldType = field.getAttribute('type');
-    const value = field.value;
-    const lastLetter = value.slice(-1);
-    const validateFunction = validateSymbol[fieldType];
-
-    if(validateFunction) {
-      statusSymbol = validateSymbol[fieldType](lastLetter);
-    }
-
-    if(!statusSymbol) {
-      field.value = value.slice(0, -1);
-    }
-  };
+  const checkEmailValue = checkFieldValue(regExpData.email);
+  const checkPasswordValue = checkFieldValue(regExpData.password);
 
   const formHandler = (e) => {
-    if (typeof onAuth !== 'function') {
+    e.preventDefault();
+
+    if (!onAuth || typeof onAuth !== 'function') {
       return null;
     }
 
-    e.preventDefault();
+    const formElements = event.currentTarget.elements;
 
-    let user = {
-      name: nameInput.value,
-      email: emailInput.value,
-      password: passwordInput.value
+    const user = {
+      name: formElements.name.value,
+      email: formElements.email.value,
+      password: formElements.password.value
     };
 
     onAuth(user);
@@ -58,8 +42,8 @@ const AuthForm = ({onAuth}) => {
           method="POST">
       <div className="Input">
         <input
-          ref={(element) => nameInput = element}
           required
+          name="name"
           type="text"
           placeholder="Имя"/>
         <label>
@@ -67,8 +51,8 @@ const AuthForm = ({onAuth}) => {
       </div>
       <div className="Input">
         <input
-          ref={(element) => emailInput = element}
-          onChange={inputHandler}
+          onChange={checkEmailValue}
+          name="email"
           type="email"
           placeholder="Электронная почта"/>
         <label>
@@ -76,10 +60,10 @@ const AuthForm = ({onAuth}) => {
       </div>
       <div className="Input">
         <input
-          ref={(element) => passwordInput = element}
-          onChange={inputHandler}
+          onChange={checkPasswordValue}
+          name="password"
           required
-          type="password"
+          type="text"
           placeholder="Пароль"/>
         <label>
         </label>

@@ -5,17 +5,14 @@ const FeedbackForm = ({data, onSubmit}) => {
   let nameInput, emailInput, subjectSelect, messageTextArea;
 
   const saveForm = (form) => {
-    const genderField = form.querySelector('input[type=radio]:checked');
-    let snacksCheckBoxes = form.querySelectorAll('input[type=checkbox]:checked');
-    snacksCheckBoxes = [].slice.call(snacksCheckBoxes);
-    let snacksValues = snacksCheckBoxes.map(checkbox => checkbox.value);
+    let formData = new FormData(form);
 
     let data = {
       email: emailInput.value,
       message: messageTextArea.value,
       name: nameInput.value,
-      salutation: genderField.value,
-      snacks: snacksValues,
+      salutation: formData.get('salutation'),
+      snacks: formData.getAll('snacks'),
       subject: subjectSelect.value
     };
 
@@ -102,14 +99,14 @@ const FeedbackForm = ({data, onSubmit}) => {
       <div className="contact-form__input-group">
         <p className="contact-form__label--checkbox-group">Хочу получить:</p>
         <input className="contact-form__input contact-form__input--checkbox"
-               defaultChecked={data.snacks[0] === 'пицца' || data.snacks[1] === 'пицца'}
+               defaultChecked={data.snacks.includes('пицца')}
                id="snacks-pizza"
                name="snacks"
                type="checkbox"
                value="пицца"/>
         <label className="contact-form__label contact-form__label--checkbox" htmlFor="snacks-pizza">Пиццу</label>
         <input className="contact-form__input contact-form__input--checkbox"
-               defaultChecked={data.snacks[0] === 'пирог' || data.snacks[1] === 'пирог'}
+               defaultChecked={data.snacks.includes('пирог')}
                id="snacks-cake"
                name="snacks"
                type="checkbox"
