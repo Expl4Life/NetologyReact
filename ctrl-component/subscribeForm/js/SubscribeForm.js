@@ -7,7 +7,7 @@ class SubscribeForm extends React.Component {
     };
 
     this.emailTimeOut = null;
-    this.delayInputTime = 1000;
+    this.delayInputTime = 200;
     this.emailValidStatus = false;
 
     this.handleSubmit = this.handleSubmit.bind(this);
