@@ -15,10 +15,10 @@ function agregateData(Component, propName = '') {
         }
 
         componentDidMount() {
+            this.props.list && this.editData(this.propName, this.props.list);
         }
 
         componentWillReceiveProps(nextProps) {
-
             nextProps.list && this.editData(this.propName, nextProps.list);
         }
 
@@ -26,7 +26,6 @@ function agregateData(Component, propName = '') {
             if (!this.agregateMethods[propName]) {
                 return;
             }
-
             this.agregateMethods[propName].bind(this)(data);
         }
 
