@@ -22,16 +22,13 @@ function isValidDate(dateString) {
   let regEx = /^\d{4}-\d{2}-\d{2}$/;
   if(!dateString.match(regEx)) return false;  // Invalid format
   let d = new Date(dateString);
-  let time = d.getTime();
-  if(!time && time !== 0) return false; // Invalid date
-  if(time > (new Date().getTime())) return false; // Invalid date
+  if(d > new Date()) return false; // Invalid date
   return d.toISOString().slice(0,10) === dateString;
 }
 
 function isValidUrl(str) {
-  let reg = /(https):\/\/(?:s|vk.com)(\w+:{0,1}\w*)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%!\-\/]))?/;
-  let pattern = new RegExp(reg);
-  return pattern.test(str);
+  let reg = /^https:\/\/vk.com\/(id[0-9]+|[A-Za-z0-9_-]+)$/;
+  return reg.test(str);
 }
 
 
@@ -95,8 +92,8 @@ const Profile = props => {
 };
 
 Profile.propTypes = {
-  ['first_name']: PropTypes.string.isRequired,
-  ['last_name']: PropTypes.string,
+  first_name: PropTypes.string.isRequired,
+  last_name: PropTypes.string,
   img: PropTypes.string.isRequired,
   birthday: datePropTypeChecker.isRequired,
   url: urlPropTypeChecker.isRequired,
