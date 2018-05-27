@@ -1,5 +1,9 @@
 'use strict';
 
+const AgregatedMonthTable = agregateData(MonthTable, 'month');
+const AgregatedYearTable = agregateData(YearTable, 'year');
+const AgregatedSortTable = agregateData(SortTable, 'sort');
+
 class App extends React.Component {
     constructor(props) {
         super(props);
@@ -17,9 +21,9 @@ class App extends React.Component {
     render() {
         return (
             <div id="app">
-                <MonthTable list={this.state.list} />
-                <YearTable list={this.state.list} />
-                <SortTable list={this.state.list} />
+                <AgregatedMonthTable list={this.state.list}/>
+                <AgregatedYearTable list={this.state.list}/>
+                <AgregatedSortTable list={this.state.list}/>
             </div>
         );
     }

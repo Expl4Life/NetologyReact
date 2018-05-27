@@ -1,0 +1,1 @@
+const DateTimePretty = prettyDate(DateTime);

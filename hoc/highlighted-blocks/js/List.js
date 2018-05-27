@@ -1,16 +1,19 @@
 'use strict';
 
+const HighlightedVideo = highlightedBlock(Video);
+const HighlightedArticle = highlightedBlock(Article);
+
 const List = props => {
-    return props.list.map(item => {
+    return props.list && props.list.map(item => {
         switch (item.type) {
             case 'video':
                 return (
-                    <Video {...item} />
+                    <HighlightedVideo {...item} />
                 );
 
             case 'article':
                 return (
-                    <Article {...item} />
+                    <HighlightedArticle {...item} />
                 );
         }
     });
