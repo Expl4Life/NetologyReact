@@ -30,45 +30,97 @@ function agregateData(Component, propName = '') {
         }
 
         monthMethod(data) {
-            let list = data.map((item) => {
-                let date = new Date(item.date),
-                    locale = 'en-us',
-                    month = date.toLocaleString(locale, {month: 'short'});
-                return {
-                    amount: item.amount,
-                    month
-                };
+            let sortedList = this.sortFromMaxToMin(data);
+
+            if (!sortedList || !sortedList.length) {
+                return;
+            }
+
+            let lastYear = sortedList[0].date && new Date(sortedList[0].date).getFullYear();
+            if (!lastYear) {
+                return;
+            }
+
+            let monthList = [];
+
+
+            sortedList.forEach((item) => {
+                let year = new Date(item.date).getFullYear();
+                if(year < lastYear) {
+                    return;
+                }
+
+                let date = new Date(item.date);
+                let locale = 'en-us';
+                let month = date.getMonth();
+                let monthStr = date.toLocaleString(locale, {month: 'short'});
+                if(monthList[month]) {
+                    monthList[month].amount += item.amount;
+                } else {
+                   monthList[month] = {
+                       month: monthStr,
+                       amount: item.amount
+                   }
+                }
+
             });
 
-            this.setState({list});
+            this.setState({
+                list: monthList
+            });
         }
 
         yearMethod(data) {
-            let list = data.map((item) => {
-                return {
-                    amount: item.amount,
-                    year: new Date(item.date).getFullYear()
-                };
-            });
+            let sortedList = this.sortFromMaxToMin(data);
 
-            this.setState({list});
-        }
+            if (!sortedList || !sortedList.length) {
+                return;
+            }
+
+            let lastYear = sortedList[0].date && new Date(sortedList[0].date).getFullYear();
+            if (!lastYear) {
+                return;
+            }
+
+            const yearListObj = sortedList.reduce((newList, item) => {
+                const date = new Date(item.date);
+                const year = date.getFullYear();
+                newList[year] = (newList[year]) ? newList[year] + item.amount : item.amount;
+                return newList;
+            }, {});
+
+            const yearList = Object.keys(yearListObj)
+                .sort((year1, year2) => +year1 > +year2)
+                .map(year => {
+                    return {year: year, amount: yearListObj[year]};
+                });
+
+            this.setState({
+                list: yearList
+            });
+        };
 
         sortMethod(data) {
-            let sortedList = data.sort((item1, item2) => {
-
-                return (new Date(item2.date) - new Date(item1.date));
-            });
+            if (!data.length) {
+                return null;
+            }
+            let sortedList = this.sortFromMaxToMin(data);
 
             this.setState({
                 list: sortedList
             });
         }
 
+        sortFromMaxToMin(data) {
+            return data.sort((item1, item2) => {
+                return (new Date(item2.date) - new Date(item1.date));
+            });
+        }
+
         render() {
             const props = {};
 
-            if(this.state.list.length) {
+            if (this.state.list.length) {
                 props.list = this.state.list;
             }
 
